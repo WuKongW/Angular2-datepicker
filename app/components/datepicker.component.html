@@ -1,0 +1,43 @@
+<div class="date-picker-input">
+    <input type="text" class="form-control pointer" (click)="toggleCalendar()" readonly [value]="displayDate" />
+    <i class="glyphicon glyphicon-calendar" aria-hidden="true" (click)="isHidden = !isHidden"></i>
+</div>
+<div [style.display]="isHidden ? 'none' : 'block'">
+    <div class="date-picker">
+        <div class="nav-bar pull-left">
+            <ul *ngIf="navBars" >
+                <li class="pointer" [class.active]="isBarSelected(bar)" (click)="selectBar(bar)" *ngFor="let bar of navBars">{{bar.label}}</li>
+            </ul>
+        </div>
+        <div class="calendar pull-left">
+            <div class="control-bar">
+                <span *ngIf="titleMonth <= maxMonth && titleYear < maxYear" class="material-icons" (click)="decreaseMonth()"> ‹ </span>
+                <span class="monthTitle"> {{pickerTitle}} </span>
+                <span *ngIf="titleMonth >= minMonth && titleYear > minYear" class="material-icons" (click)="increaseMonth()"> › </span>
+            </div>
+            <div class="days">
+                <table>
+                    <thead>
+                        <th>Su</th>
+                        <th>Mo</th>
+                        <th>Tu</th>
+                        <th>We</th>
+                        <th>Th</th>
+                        <th>Fr</th>
+                        <th>Sa</th>
+                    </thead>
+                    <tr *ngFor="let week of dates">
+                        <td class="pointer" *ngFor="let day of week"
+                            [class.active]="day != null && day.isSelected" [class.disabled]="day != null && day.isDisabled" [class.range]="day !=null && !day.isSelected && day.isInRange"
+                            (click)="selectDate(day)">
+                            <span class="date" *ngIf="day != null" [ngStyle]="{'display': day ? 'block' : 'none', 'color': isDateSelected(day) ? 'white' : day.isInMonth ? '' : '#999999'}">
+                                {{day.date}}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="cancelArea" (click)="toggleCalendar(true)"></div>
+</div> 
