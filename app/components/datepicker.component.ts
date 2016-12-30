@@ -69,6 +69,12 @@ export class DatepickerComponent implements OnInit {
             if (!this.hasInitDate && !this.isInited) {
                 this.initDatePicker(new Date());
             }
+
+            if (this.hasInitDate) {
+                this.setAvailableDates(this.selectedQuickDateBar);
+            } else {
+                this.selectBar(this.selectedQuickDateBar);
+            }
         }
         if (changes['maxDate'] && changes['maxDate'].currentValue) {
             this._maxDate = new Date(this.maxDate);
@@ -325,7 +331,7 @@ export class DatepickerComponent implements OnInit {
 
     private renderDisplayDate(date: Date): string {
         if (date)
-            return (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '-' + this.monthName[date.getMonth()] + '-' + date.getFullYear();
+            return (date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()) + '-' + this.monthName[date.getMonth()] + '-' + date.getFullYear();
     }
 
     private toggleCalendar(isHidden?: boolean): void {

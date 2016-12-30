@@ -1,12 +1,12 @@
 <div class="date-picker-input">
     <input type="text" class="form-control pointer" (click)="toggleCalendar()" readonly [value]="displayDate" />
-    <i class="glyphicon glyphicon-calendar" aria-hidden="true" (click)="isHidden = !isHidden"></i>
+    <i (click)="isHidden = !isHidden"></i>
 </div>
 <div [style.display]="isHidden ? 'none' : 'block'">
     <div class="date-picker">
         <div class="nav-bar pull-left">
-            <ul *ngIf="navBars" >
-                <li class="pointer" [class.active]="isBarSelected(bar)" (click)="selectBar(bar)" *ngFor="let bar of navBars">{{bar.label}}</li>
+            <ul *ngIf="quickDateBars" >
+                <li class="pointer" [class.active]="isBarSelected(bar)" (click)="selectBar(bar)" *ngFor="let bar of quickDateBars">{{bar.label}}</li>
             </ul>
         </div>
         <div class="calendar pull-left">
