@@ -309,6 +309,7 @@ export class DatepickerComponent implements OnInit {
                 + this.renderDisplayDate(this.startDate) + ' - ' + this.renderDisplayDate(this.endDate);
         } else {
             this.startDate = bar.date || bar.startDate || bar.endDate;
+            this.endDate = null;
             this.displayDate = (this.displayDateType ? bar.value : '') + this.renderDisplayDate(this.startDate);
         }
 
