@@ -1,5 +1,6 @@
-import { QuickDateBar } from './components/datepicker.component';
 import { Component } from '@angular/core';
+
+import { QuickDateBar } from './components/datepicker.component';
 
 @Component({
     selector: 'wk-app',

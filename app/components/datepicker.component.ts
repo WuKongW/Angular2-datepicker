@@ -17,6 +17,7 @@ export class DatepickerComponent implements OnInit {
     @Input() displayDateType: boolean;
     @Input() quickDateBars: QuickDateBar[];
     @Input() selectedQuickDateBar: QuickDateBar;
+    @Input() daysOfWeekDisabled: number[] = [];
     @Output() selected_date: EventEmitter<any> = new EventEmitter<any>();
 
     
@@ -37,6 +38,7 @@ export class DatepickerComponent implements OnInit {
     private _maxDate: Date = new Date('12/31/2117');
     private _disabledDates: (Date | string)[];
     private _availableDates: (Date | string)[];
+    private _daysOfWeekDisabled: number[];
     private minYear: number;
     private minMonth: number;
     private maxYear: number;
@@ -87,6 +89,9 @@ export class DatepickerComponent implements OnInit {
         }
         if (changes['disabledDates'] && changes['disabledDates'].currentValue) {
             this._disabledDates = this.disabledDates;
+        }
+        if (changes['daysOfWeekDisabled'] && changes['daysOfWeekDisabled'].currentValue) {
+            this._daysOfWeekDisabled = this.daysOfWeekDisabled;
         }
         if (changes['initDate'] && changes['initDate'].currentValue) {
             let _initDate: Date = new Date(this.initDate);
@@ -158,6 +163,10 @@ export class DatepickerComponent implements OnInit {
             }
         if (this.availableDates && this.availableDates.length > 0
             && this.availableDates.filter((availableDate: Date|string) => date.getTime() === new Date(availableDate).getTime()).length === 0) {
+                return true;
+            }
+        if (this.daysOfWeekDisabled && this.daysOfWeekDisabled.length > 0
+            && this.daysOfWeekDisabled.indexOf(date.getDay()) > -1) {
                 return true;
             }
         return false;
@@ -322,7 +331,8 @@ export class DatepickerComponent implements OnInit {
         this.maxDate = (bar && bar.maxDate) ? bar.maxDate : this._maxDate;
         this.minDate = (bar && bar.minDate) ? bar.minDate : this._minDate;
         this.disabledDates = (bar && bar.disabledDates) ? bar.disabledDates : this._disabledDates;
-        this.availableDates = (bar && bar.availableDates) ? bar.availableDates : this.availableDates;
+        this.availableDates = (bar && bar.availableDates) ? bar.availableDates : this._availableDates;
+        this._daysOfWeekDisabled = (bar && bar.daysOfWeekDisabled) ? bar.daysOfWeekDisabled : this._daysOfWeekDisabled;        
         this.initInput();
     }
 
@@ -367,6 +377,7 @@ export interface QuickDateBar {
     maxDate?: Date;
     disabledDates?: (Date | string)[];
     availableDates?: (Date | string)[];
+    daysOfWeekDisabled?: number[];
     label?: string;
     value?: string;
     monthly?: true;
